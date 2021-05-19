@@ -1,6 +1,8 @@
 # isit1701z-sysadm
 Бум. Инструкция подъехала.
 
+Данная инструкция - набор команд из лекции. https://drive.google.com/file/d/1ZlLNoTG_Ji5qqUH7i2vihpAYcL-wjkjE/view?usp=sharing
+
 debian берём тут: https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.9.0-amd64-netinst.iso
 винду - сами найдёте где-нибудь :) лучше, если это будет семёрка. WinXP - для дедов и может плохо работать с самбой. Win10 - в принципе норм, но тоже может выеживаться.
 
