@@ -32,8 +32,9 @@ After=networking.service
 
 Настройка nftables
 создадим цепочки и таблицы правил.
+В ответ на все эти команды сервер не должен ничего возвращать. Если что-то вывелось, то скорее всего это сообщение об ошибке.
 ```
-nft flush rulesetclea
+nft flush ruleset
 nft add table ip filter
 nft add table ip nat
 nft add chain ip filter input "{ type filter hook input priority 0; policy drop; }"
@@ -56,7 +57,36 @@ nft add rule ip filter input udp dport {33434-33524} accept
 nft add rule ip filter input tcp dport 22 accept
 ```
 Выведем полученную конфигурацию:
+
 `nft list ruleset`
 
 Должно получиться как-то так:
+
 ![image](https://user-images.githubusercontent.com/65608414/118846015-b9410600-b8e5-11eb-92df-17f569d83cf8.png)
+
+Теперь настроим форвардинг пакетов:
+
+```
+nft add rule ip filter forward ct state invalid drop
+nft add rule ip filter forward iif wan0 ct state related,established accept
+nft add rule ip filter forward iif lan0 oif wan0 accept
+```
+Выведем полученную конфигурацию:
+
+`nft list ruleset`
+
+Выглядеть станет примерно так:
+
+![image](https://user-images.githubusercontent.com/65608414/118847813-93b4fc00-b8e7-11eb-8294-48933e3d66c2.png)
+
+Настроим цепочки pre- и postrouting
+```
+nft add rule ip nat postrouting oif wan0 masquerade
+```
+Выведем полученную конфигурацию:
+
+`nft list ruleset`
+
+Выглядеть станет примерно так:
+
+![image](https://user-images.githubusercontent.com/65608414/118848356-1e95f680-b8e8-11eb-83b8-ff86b8e02824.png)
