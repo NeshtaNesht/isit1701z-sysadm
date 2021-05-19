@@ -90,3 +90,11 @@ nft add rule ip nat postrouting oif wan0 masquerade
 Выглядеть станет примерно так:
 
 ![image](https://user-images.githubusercontent.com/65608414/118848356-1e95f680-b8e8-11eb-83b8-ff86b8e02824.png)
+
+Сохраним настроенные правила, чтобы они не пропали при перезагрузке:
+ ```
+echo 'flush ruleset' > /etc/nftables.conf
+nft list ruleset >> /etc/nftables.conf
+```
+>> - это два знака "больше", две треугольных скобочки. В первой команде - одна, для перезаписи файла. Во второй - две, для дополнения файла.
+
